@@ -1,11 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import { Location } from "./location";
 import "./styles.css";
 
 class App extends React.Component {
   state = {
-    list: ["000000", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+    list: [
+      "Nayan1",
+      "Nayan2",
+      "Nayan3",
+      "Nayan4",
+      "Nayan5",
+      "Nayan6",
+      "Nayan7",
+      "Nayan8",
+      "Nayan9",
+      "Nayan10",
+      "Nayan11",
+      "Nayan12"
+    ],
     // list: ["$100", "$500", "$9,999", "$1", "$60", "$1,000", "$4.44"],
     // list: ["$100", "$500", "$9,999", "$1", "$60"],
     radius: 65, // PIXELS
@@ -39,12 +52,12 @@ class App extends React.Component {
     let angle = 0;
     for (let i = 0; i < numOptions; i++) {
       let text = this.state.list[i];
-      this.renderSector(i + 1, text, angle, arcSize, this.getColor());
+      this.renderSector(i + 1, text, angle, arcSize, this.getColor(i));
       angle += arcSize;
     }
 
     this.renderCircle();
-    // this.renderCenterCircle();
+    this.renderCenterCircle();
   }
 
   topPosition = (num, angle) => {
@@ -78,9 +91,11 @@ class App extends React.Component {
     var c = document.getElementById("wheel");
     var ctx = c.getContext("2d");
     ctx.beginPath();
-    ctx.arc(150, 150, this.state.radius * 2, 0, 2 * Math.PI);
-    ctx.lineWidth = 5;
+    ctx.arc(150, 150, 10, 0, 2 * Math.PI);
+    ctx.lineWidth = 20;
     ctx.strokeStyle = "white";
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = "gray";
     ctx.stroke();
   }
   renderCircle() {
@@ -88,10 +103,12 @@ class App extends React.Component {
     var ctx = c.getContext("2d");
     ctx.beginPath();
     ctx.arc(150, 150, this.state.radius * 2, 0, 2 * Math.PI);
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
     ctx.strokeStyle = "white";
     ctx.shadowBlur = 5;
     ctx.shadowColor = "#A9A9A9";
+    ctx.strokeStyle = "white";
+
     ctx.stroke();
   }
   renderSector(index, text, start, arc, color) {
@@ -105,35 +122,33 @@ class App extends React.Component {
     let endAngle = start + arc;
     let angle = index * arc;
     let baseSize = radius * 2.33;
-    let textRadius = baseSize - 70;
+    let textRadius = baseSize - 65;
 
     ctx.beginPath();
     ctx.arc(x, y, radius, startAngle, endAngle, false);
     ctx.lineWidth = radius * 2;
     ctx.strokeStyle = color;
 
-    ctx.font = "12px Arial";
-    ctx.fillStyle = "white";
-    ctx.shadowBlur = 3;
-    ctx.shadowColor = "white";
+    ctx.font = "500 12px Arial";
+    ctx.fillStyle = index % 2 === 0 ? "white" : "black";
+    ctx.shadowBlur = 1;
+    ctx.shadowColor = index % 2 === 0 ? "white" : "black";
     ctx.stroke();
 
     ctx.save();
     ctx.translate(
-      baseSize + Math.cos(angle - arc / 2.8) * textRadius,
-      baseSize + Math.sin(angle - arc / 2.8) * textRadius
+      baseSize + Math.cos(angle - arc / 2.5) * textRadius,
+      baseSize + Math.sin(angle - arc / 2) * textRadius
     );
-    ctx.rotate(angle - arc / 2);
+    ctx.rotate(angle - arc / 1.9);
     ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
     ctx.restore();
   }
 
-  getColor() {
+  getColor(i) {
     // randomly generate rbg values for wheel sectors
-    let r = Math.floor(Math.random() * 255);
-    let g = Math.floor(Math.random() * 255);
-    let b = Math.floor(Math.random() * 255);
-    return `rgba(${r},${g},${b},0.8)`;
+
+    return i % 2 === 0 ? `#f9cacd` : "#ab5252";
   }
 
   spin = () => {
@@ -196,7 +211,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <span id="selector">&#9660;</span>
+        <span id="selector">
+          <Location />
+        </span>
         <canvas
           id="wheel"
           width="300"
