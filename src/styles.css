@@ -1,0 +1,65 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+button {
+  background: none;
+  border: 1px solid black;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+#spin,
+#reset {
+  position: relative;
+}
+
+#spin:hover {
+  color: rgb(0, 180, 120);
+  border-color: rgb(0, 180, 120);
+}
+
+#spin:focus,
+#reset:focus {
+  outline: none;
+}
+
+/* #reset {
+  position: absolute;
+  bottom: 20vh;
+  right: 35vw;
+} */
+
+#reset:hover {
+  color: red;
+  border-color: red;
+}
+
+#readout {
+  position: absolute;
+  bottom: 7vh;
+  left: 35vw;
+}
+
+#selector {
+  position: absolute;
+  top: 47%;
+  right: 0%;
+  z-index: 3;
+  transform: rotate(90deg);
+}
+
+#result {
+  font-size: 50px;
+  color: rgb(0, 180, 120);
+}
+
+input {
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid black;
+}
